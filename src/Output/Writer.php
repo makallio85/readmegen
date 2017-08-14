@@ -45,9 +45,11 @@ class Writer
         // Final log
         $log = join("\n", (array) $this->formatter->generate())."\n";
 
+        $escaped = preg_quote($this->break);
+
         // Include the breakpoint
-        if (false === empty($this->break) && 1 === preg_match("/^{$this->break}/m", $fileContent)) {
-            $splitFileContent = preg_split("/^{$this->break}/m", $fileContent);
+        if (false === empty($this->break) && 1 === preg_match("/^{$escaped}/m", $fileContent)) {
+            $splitFileContent = preg_split("/^{$escaped}/m", $fileContent);
 
             file_put_contents($this->formatter->getFileName(), $splitFileContent[0].$this->break."\n".$log.$splitFileContent[1]);
 
